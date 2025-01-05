@@ -19,7 +19,7 @@ function storeData() {
 
     existingBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      alert(`Logged in as ${savedData.username}`);
+      alert(`Logged in as username`);
     });
   } else if (localStorage.length < 0) {
     inputBox.style.display = "block !important";
@@ -32,7 +32,7 @@ function storeData() {
       userData.username = userName.value;
       userData.password = passWord.value;
       localStorage.setItem("userdata", JSON.stringify(userData));
-      alert(`Logged in as ${userData.username}`);
+      alert(`Logged in as existing user`);
     } else if (!checkBox.checked) {
       localStorage.removeItem("userdata");
     }
