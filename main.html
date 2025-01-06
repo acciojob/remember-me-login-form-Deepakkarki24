@@ -1,26 +1,119 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .login-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+        .login-container h1 {
+            margin-bottom: 20px;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-container label {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+        .login-container button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login Form</h1>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required />
+            <input type="password" id="password" placeholder="Password" required />
+            <label>
+                <input type="checkbox" id="checkbox" /> Remember me
+            </label>
+            <input type="submit" id="submit" value="Submit" />
+        </form>
+        <button id="existing" style="display: none;">Login as existing user</button>
+    </div>
 
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const usernameField = document.getElementById('username');
+        const passwordField = document.getElementById('password');
+        const checkboxField = document.getElementById('checkbox');
+        const existingButton = document.getElementById('existing');
 
-  <body>
-    <!-- the entire body must be written by student -->
-    <main>
-      <h1 class="heading">Login Form</h1>
-      <form>
-        <div class="inputFields">
-          <label for="username">Username:</label>
-          <input type="text" id="username" required />
-          <label for="password">Password:</label>
-          <input type="password" id="password" required />
-          <label for="checkbox">Remember me:</label>
-          <input type="checkbox" id="checkbox" />
-          <input type="submit" value="Submit" id="submit" />
-        </div>
-      </form>
-    </main>
-    <script type="text/javascript" src="index.js"></script>
-  </body>
+        // Check local storage for existing user data
+        window.onload = () => {
+            const storedUsername = localStorage.getItem('username');
+            const storedPassword = localStorage.getItem('password');
+
+            if (storedUsername && storedPassword) {
+                existingButton.style.display = 'block';
+            }
+        };
+
+        // Handle form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const username = usernameField.value;
+            const password = passwordField.value;
+
+            if (checkboxField.checked) {
+                localStorage.setItem('username', username);
+                localStorage.setItem('password', password);
+            } else {
+                localStorage.removeItem('username');
+                localStorage.removeItem('password');
+            }
+
+            alert(`Logged in as ${username}.`);
+
+            if (localStorage.getItem('username') && localStorage.getItem('password')) {
+                existingButton.style.display = 'block';
+            } else {
+                existingButton.style.display = 'none';
+            }
+        });
+
+        // Handle existing user button
+        existingButton.addEventListener('click', () => {
+            const storedUsername = localStorage.getItem('username');
+            alert(`Logged in as ${storedUsername}.`);
+        });
+    </script>
+</body>
 </html>
